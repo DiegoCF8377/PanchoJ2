@@ -16,6 +16,10 @@ namespace KartGame.KartSystems
             public float ElapsedTime;
             public float MaxTime;
         }
+        public bool left = false;
+        public bool right = false;
+        public bool accelerate = false;
+        private bool mobile = false;
 
         /// <summary>
         /// Contains a series tunable parameters to tweak various karts for unique driving mechanics.
@@ -60,6 +64,8 @@ namespace KartGame.KartSystems
             [Range(0, 1)]
             public float Suspension;
 
+
+
             // allow for stat adding for powerups.
             public static Stats operator +(Stats a, Stats b)
             {
@@ -80,10 +86,16 @@ namespace KartGame.KartSystems
             }
         }
 
+        
+
         public Rigidbody Rigidbody { get; private set; }
         public Vector2 Input       { get; private set; }
         public float AirPercent    { get; private set; }
         public float GroundPercent { get; private set; }
+
+        private float mobileTurn;
+
+        private float mobileAcc;
 
         public ArcadeKart.Stats baseStats = new ArcadeKart.Stats
         {
@@ -160,16 +172,75 @@ namespace KartGame.KartSystems
             float accel = Input.y;
             float turn = Input.x;
 
+
+            MobileControls();
+
             // apply vehicle physics
             GroundVehicle(minHeight);
             if (canMove)
             {
-                MoveVehicle(accel, turn);
+                if (mobile)
+                {
+                    MoveVehicle(mobileAcc, mobileTurn);
+                }
+                else
+                {
+                    MoveVehicle(accel, turn);
+                }
+                
+                
             }
             GroundAirbourne();
 
             // animation
             AnimateSuspension();
+        }
+
+        void MobileControls()
+        {
+
+            if (left)
+            {
+                mobileTurn = -1;
+            }
+            else if (right)
+            {
+                mobileTurn = 1;
+            }
+            else
+            {
+                mobileTurn = 0;
+            }
+
+            if (accelerate)
+            {
+                mobileAcc = 1;
+            }
+            else
+            {
+                mobileAcc = 0;
+            }
+            if (mobileTurn != 0 || mobileAcc != 0)
+            {
+                mobile = true;
+            }
+            else
+            {
+                mobile = false;
+            }
+        }
+
+        public void mobileLeftButton()
+        {
+            left = !left;
+        }
+        public void mobileRightButton()
+        {
+            right = !right;
+        }
+        public void mobileAccButton()
+        {
+            accelerate = !accelerate;
         }
 
         void GatherInputs()
