@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace KartGame.KartSystems
 {
@@ -16,10 +17,16 @@ namespace KartGame.KartSystems
             public float ElapsedTime;
             public float MaxTime;
         }
-        public bool left = false;
-        public bool right = false;
-        public bool accelerate = false;
+        private bool left = false;
+        private bool right = false;
+        private bool accelerate = false;
         private bool mobile = false;
+        private bool NitroPressed = false;
+        private bool AcceleratePressed = false;
+        public Slider Nitro;
+        public GameObject NitroGain;
+        
+
 
         /// <summary>
         /// Contains a series tunable parameters to tweak various karts for unique driving mechanics.
@@ -174,6 +181,7 @@ namespace KartGame.KartSystems
 
 
             MobileControls();
+            NitroConsume();
 
             // apply vehicle physics
             GroundVehicle(minHeight);
@@ -194,6 +202,28 @@ namespace KartGame.KartSystems
 
             // animation
             AnimateSuspension();
+        }
+
+
+        private void NitroConsume()
+        {
+            if (Nitro.value!= 0 && NitroPressed)
+            {
+                Nitro.value -= 0.5f;
+                finalStats.TopSpeed = 50;
+                accelerate = true;
+            }
+            else if ((NitroPressed == false && AcceleratePressed == false )||(Nitro.value==0&& AcceleratePressed == false))
+            {
+                accelerate = false;
+                finalStats.TopSpeed = 30;
+            }
+        }
+
+        public void mobileNitroButton()
+        {
+            NitroPressed = !NitroPressed;
+            
         }
 
         void MobileControls()
@@ -241,6 +271,8 @@ namespace KartGame.KartSystems
         public void mobileAccButton()
         {
             accelerate = !accelerate;
+            AcceleratePressed = !AcceleratePressed;
+            
         }
 
         void GatherInputs()
