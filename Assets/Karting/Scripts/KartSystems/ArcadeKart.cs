@@ -207,13 +207,13 @@ namespace KartGame.KartSystems
 
         private void NitroConsume()
         {
-            if (Nitro.value!= 0 && NitroPressed)
+            if (Nitro.value != 0 && NitroPressed)
             {
                 Nitro.value -= 0.5f;
                 finalStats.TopSpeed = 50;
                 accelerate = true;
             }
-            else if ((NitroPressed == false && AcceleratePressed == false )||(Nitro.value==0&& AcceleratePressed == false))
+            else if ((NitroPressed == false && AcceleratePressed == false )||(Nitro.value==0 && AcceleratePressed == false))
             {
                 accelerate = false;
                 finalStats.TopSpeed = 30;

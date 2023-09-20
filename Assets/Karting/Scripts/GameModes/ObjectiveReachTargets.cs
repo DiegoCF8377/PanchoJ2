@@ -19,7 +19,7 @@ public class ObjectiveReachTargets : Objective
     IEnumerator Start()
     {
    
-        TimeManager.OnSetTime(totalTimeInSecs, isTimed, gameMode);
+        TimeManager.OnSetTime(0, isTimed, gameMode);
         
         yield return new WaitForEndOfFrame();
 

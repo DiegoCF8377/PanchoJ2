@@ -116,35 +116,35 @@ public class GameFlowManager : MonoBehaviour
     void Update()
     {
 
-        if (gameState != GameState.Play)
-        {
-            elapsedTimeBeforeEndScene += Time.deltaTime;
-            if(elapsedTimeBeforeEndScene >= endSceneLoadDelay)
-            {
+        //if (gameState != GameState.Play)
+        //{
+        //    elapsedTimeBeforeEndScene += Time.deltaTime;
+        //    if(elapsedTimeBeforeEndScene >= endSceneLoadDelay)
+        //    {
 
-                float timeRatio = 1 - (m_TimeLoadEndGameScene - Time.time) / endSceneLoadDelay;
-                endGameFadeCanvasGroup.alpha = timeRatio;
+        //        float timeRatio = 1 - (m_TimeLoadEndGameScene - Time.time) / endSceneLoadDelay;
+        //        endGameFadeCanvasGroup.alpha = timeRatio;
 
-                float volumeRatio = Mathf.Abs(timeRatio);
-                float volume = Mathf.Clamp(1 - volumeRatio, 0, 1);
-                AudioUtility.SetMasterVolume(volume);
+        //        float volumeRatio = Mathf.Abs(timeRatio);
+        //        float volume = Mathf.Clamp(1 - volumeRatio, 0, 1);
+        //        AudioUtility.SetMasterVolume(volume);
 
-                // See if it's time to load the end scene (after the delay)
-                if (Time.time >= m_TimeLoadEndGameScene)
-                {
-                    SceneManager.LoadScene(m_SceneToLoad);
-                    gameState = GameState.Play;
-                }
-            }
-        }
-        else
-        {
-            if (m_ObjectiveManager.AreAllObjectivesCompleted())
-                EndGame(true);
+        //        // See if it's time to load the end scene (after the delay)
+        //        if (Time.time >= m_TimeLoadEndGameScene)
+        //        {
+        //            SceneManager.LoadScene(m_SceneToLoad);
+        //            gameState = GameState.Play;
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    if (m_ObjectiveManager.AreAllObjectivesCompleted())
+        //        EndGame(true);
 
-            if (m_TimeManager.IsFinite && m_TimeManager.IsOver)
-                EndGame(false);
-        }
+        //    if (m_TimeManager.IsFinite && m_TimeManager.IsOver)
+        //        EndGame(false);
+        //}
     }
 
     void EndGame(bool win)

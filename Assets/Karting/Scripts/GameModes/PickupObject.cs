@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-
+using TMPro;
+using System;
 /// <summary>
 /// This class inherits from TargetObject and represents a PickupObject.
 /// </summary>
@@ -16,8 +17,12 @@ public class PickupObject : TargetObject
     [Tooltip("Destroy this gameobject after collectDuration seconds")]
     public float collectDuration = 0f;
 
+    public TextMeshProUGUI recordsText;
+    TimeManager m_TimeManager;
+
     void Start() {
         Register();
+        m_TimeManager = FindObjectOfType<TimeManager>();
     }
 
     void OnCollect()
@@ -34,8 +39,8 @@ public class PickupObject : TargetObject
         }
                
         Objective.OnUnregisterPickup(this);
-
-        TimeManager.OnAdjustTime(TimeGained);
+        int timeRemaining = (int)Math.Ceiling(m_TimeManager.TimeRemaining);
+        recordsText.text += string.Format("\n{0}:{1:00}", timeRemaining / 60, timeRemaining % 60);
 
         Destroy(gameObject, collectDuration);
     }
