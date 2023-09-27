@@ -54,7 +54,8 @@ public abstract class Objective : MonoBehaviour
     public List<TargetObject> Pickups => pickups;
     public int NumberOfPickupsTotal { get; private set; }
     public int NumberOfPickupsRemaining => Pickups.Count;
-    
+    public static int checksRemaining;
+
     public int NumberOfActivePickupsRemaining()
     {
         int total = 0;
@@ -62,7 +63,6 @@ public abstract class Objective : MonoBehaviour
         {
             if (Pickups[i].active) total++;
         }
-
         return total;
     }
 
@@ -141,7 +141,6 @@ public abstract class Objective : MonoBehaviour
             }
 
             if (NumberOfActivePickupsRemaining() != 0) return;
-
             ReachCheckpoint(0);
             ResetPickups();
             TimeDisplay.OnUpdateLap();
@@ -151,6 +150,7 @@ public abstract class Objective : MonoBehaviour
         {
             ReachCheckpoint(NumberOfPickupsRemaining - 1);
             Pickups.Remove(pickupCollected);
+            checksRemaining = NumberOfPickupsRemaining;
             if (gameMode == GameMode.Laps)
                 KartGame.Track.TimeDisplay.OnUpdateLap();
         }

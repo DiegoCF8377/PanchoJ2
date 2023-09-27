@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// This class inherits from TargetObject and represents a PickupObject.
 /// </summary>
-public class PickupObject : TargetObject
+public class PickupFinalObject : TargetObject
 {
     [Header("PickupObject")]
 
@@ -16,11 +17,12 @@ public class PickupObject : TargetObject
     
     [Tooltip("Destroy this gameobject after collectDuration seconds")]
     public float collectDuration = 0f;
-    public int NumberOfCheckpointRemaining;
+
+    [Tooltip("The name of the main menu scene")]
+    public string sceneName;
+
     public TextMeshProUGUI recordsText;
     TimeManager m_TimeManager;
-
-    public GameObject final_checkpoint;
 
     void Start() {
         Register();
@@ -41,17 +43,9 @@ public class PickupObject : TargetObject
         }
                
         Objective.OnUnregisterPickup(this);
-       
-       
         int timeRemaining = (int)Math.Ceiling(m_TimeManager.TimeRemaining);
         recordsText.text += string.Format("\n{0}:{1:00}", timeRemaining / 60, timeRemaining % 60);
-
-
-        if (Objective.checksRemaining == 0)
-        {
-            final_checkpoint.SetActive(true);
-        }
-
+        SceneManager.LoadSceneAsync(sceneName);
         Destroy(gameObject, collectDuration);
     }
     
