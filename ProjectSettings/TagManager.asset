@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - CrashMode
-  - Final_checkpoint
   layers:
   - Default
   - TransparentFX
