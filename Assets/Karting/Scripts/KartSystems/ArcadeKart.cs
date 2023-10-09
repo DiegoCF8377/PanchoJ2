@@ -24,7 +24,7 @@ namespace KartGame.KartSystems
         private bool NitroPressed = false;
         private bool AcceleratePressed = false;
         public Slider Nitro;
-        public GameObject NitroGain;
+
         
 
 
@@ -204,6 +204,13 @@ namespace KartGame.KartSystems
             AnimateSuspension();
         }
 
+        private void OnTriggerEnter(Collider col)
+        {
+            if (col.tag == NitroCollider.nitroCollider && Nitro.value != 100)
+            {
+                Nitro.value += 25;
+            }
+        }
 
         private void NitroConsume()
         {
@@ -493,6 +500,7 @@ namespace KartGame.KartSystems
 
                 // apply the damped velocity
                 Rigidbody.velocity = latFrictionDampedVelocity;
+                gameObject.transform.eulerAngles = new Vector3 (0f, gameObject.transform.rotation.eulerAngles.y, 0f);
             }
         }
 
