@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 namespace KartGame.UI
 {
@@ -13,8 +14,11 @@ namespace KartGame.UI
 
         public void LoadTargetScene() 
         {
-            SceneManager.LoadSceneAsync(SceneName);
+            SceneManager.LoadSceneAsync("PantallaDeCarga");
             NitroCollider.nitroCollider = levelCollider;
+            ChangeLevel.nextLevel = SceneName;
+
         }
+        
     }
 }
