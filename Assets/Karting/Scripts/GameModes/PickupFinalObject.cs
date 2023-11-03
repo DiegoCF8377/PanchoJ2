@@ -2,15 +2,21 @@
 using TMPro;
 using System;
 using UnityEngine.SceneManagement;
+using System.Collections;
 /// <summary>
 /// This class inherits from TargetObject and represents a PickupObject.
 /// </summary>
 public class PickupFinalObject : TargetObject
 {
+    static public bool isFinal = false; 
+    
     [Header("PickupObject")]
 
     [Tooltip("New Gameobject (a VFX for example) to spawn when you trigger this PickupObject")]
     public GameObject spawnPrefabOnPickup;
+
+    [Tooltip("Gameobject that indicates the end and obscures the screen")]
+    public GameObject finalScreen;
 
     [Tooltip("Destroy the spawned spawnPrefabOnPickup gameobject after this delay time. Time is in seconds.")]
     public float destroySpawnPrefabDelay = 10;
@@ -45,10 +51,20 @@ public class PickupFinalObject : TargetObject
         Objective.OnUnregisterPickup(this);
         int timeRemaining = (int)Math.Ceiling(m_TimeManager.TimeRemaining);
         recordsText.text += string.Format("\n{0}:{1:00}", timeRemaining / 60, timeRemaining % 60);
-        SceneManager.LoadSceneAsync(sceneName);
-        Destroy(gameObject, collectDuration);
+        finalScreen.SetActive(true);
+        isFinal = true;
+        StartCoroutine(Wait());
+
+
     }
     
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(FinalScreen.tiempoPantalla);
+        Destroy(gameObject, collectDuration);
+        SceneManager.LoadSceneAsync(sceneName);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if ((layerMask.value & 1 << other.gameObject.layer) > 0 && other.gameObject.CompareTag("Player"))
