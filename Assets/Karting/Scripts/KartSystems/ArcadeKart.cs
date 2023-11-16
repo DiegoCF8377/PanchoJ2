@@ -20,6 +20,7 @@ namespace KartGame.KartSystems
         private bool left = false;
         private bool right = false;
         private bool accelerate = false;
+        private bool reverse = false;
         private bool mobile = false;
         private bool NitroPressed = false;
         private bool AcceleratePressed = false;
@@ -217,14 +218,18 @@ namespace KartGame.KartSystems
             if (Nitro.value != 0 && NitroPressed)
             {
                 Nitro.value -= 0.5f;
-                finalStats.TopSpeed = 50;
+                finalStats.TopSpeed = 90;
                 accelerate = true;
-            }
-            else if ((NitroPressed == false && AcceleratePressed == false )||(Nitro.value==0 && AcceleratePressed == false))
+            } else if (Nitro.value <= 0 || NitroPressed == false)
             {
-                accelerate = false;
+                NitroPressed = false;
                 finalStats.TopSpeed = 30;
+                if (AcceleratePressed == false)
+                {
+                    accelerate = false;
+                }   
             }
+
         }
 
         public void mobileNitroButton()
@@ -253,10 +258,15 @@ namespace KartGame.KartSystems
             {
                 mobileAcc = 1;
             }
+            else if (reverse)
+            {
+                mobileAcc = -1;
+            }
             else
             {
                 mobileAcc = 0;
             }
+
             if (mobileTurn != 0 || mobileAcc != 0)
             {
                 mobile = true;
@@ -281,6 +291,11 @@ namespace KartGame.KartSystems
             AcceleratePressed = !AcceleratePressed;
             
         }
+        public void mobileReverseButton()
+        {
+            reverse = !reverse;
+        }
+
 
         void GatherInputs()
         {
