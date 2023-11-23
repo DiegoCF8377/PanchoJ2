@@ -215,7 +215,7 @@ namespace KartGame.KartSystems
 
         private void NitroConsume()
         {
-            if (Nitro.value != 0 && NitroPressed)
+            if (Nitro.value > 0 && NitroPressed)
             {
                 Nitro.value -= 0.5f;
                 finalStats.TopSpeed = 90;

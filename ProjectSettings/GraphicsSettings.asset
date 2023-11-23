@@ -156,7 +156,7 @@ GraphicsSettings:
     m_Tier: 0
     m_Settings:
       standardShaderQuality: 0
-      renderingPath: 3
+      renderingPath: 0
       hdrMode: 2
       realtimeGICPUUsage: 25
       useReflectionProbeBoxProjection: 0
@@ -172,8 +172,8 @@ GraphicsSettings:
     m_BuildTarget: 7
     m_Tier: 1
     m_Settings:
-      standardShaderQuality: 1
-      renderingPath: 3
+      standardShaderQuality: 0
+      renderingPath: 0
       hdrMode: 2
       realtimeGICPUUsage: 25
       useReflectionProbeBoxProjection: 0
@@ -189,8 +189,8 @@ GraphicsSettings:
     m_BuildTarget: 7
     m_Tier: 2
     m_Settings:
-      standardShaderQuality: 1
-      renderingPath: 3
+      standardShaderQuality: 0
+      renderingPath: 0
       hdrMode: 2
       realtimeGICPUUsage: 25
       useReflectionProbeBoxProjection: 0
